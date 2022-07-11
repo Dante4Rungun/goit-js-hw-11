@@ -17,7 +17,6 @@ search.addEventListener("input", (event) => {
 })
 
 async function galleryAxiosCreate(searchString,page){
-
         moreBtn.setAttribute('hidden','')
         try{
             const galleryItems = await axiosGalerry(searchString,page)
@@ -30,11 +29,9 @@ async function galleryAxiosCreate(searchString,page){
                 Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
             }
             else{
-                gallery.innerHTML = ""
                 createGallery(galleryItems)
                 moreBtn.removeAttribute('hidden')
             }
-
         }
         catch(error){
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
@@ -43,6 +40,7 @@ async function galleryAxiosCreate(searchString,page){
 
 search.addEventListener("submit", (event) => {
     event.preventDefault()
+    gallery.innerHTML = ""
     page = 1
     galleryAxiosCreate(searchString,page)
 })
