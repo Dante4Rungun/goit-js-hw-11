@@ -16,21 +16,22 @@ search.addEventListener("input", (event) => {
     searchString = event.target.value
 })
 
-async function galleryAxiosCreate(searchString,page){
+async function galleryAxiosCreate(searchString,page,clickType){
         moreBtn.setAttribute('hidden','')
         try{
             const galleryItems = await axiosGalerry(searchString,page)
-            if(galleryItems.totalHits <= page*40){
+            if(galleryItems.totalHits <= page*40 && clickType === 'click'){
                 Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
                 moreBtn.setAttribute('hidden','')
             }
-            else if(galleryItems.hits.length === 0){
+            else if(galleryItems.hits.length === 0 && clickType === 'submit'){
                 gallery.innerHTML = ""
                 Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
             }
             else{
                 createGallery(galleryItems)
                 moreBtn.removeAttribute('hidden')
+                Notiflix.Notify.success('Hooray we found 500 images!')
             }
         }
         catch(error){
@@ -42,7 +43,7 @@ search.addEventListener("submit", (event) => {
     event.preventDefault()
     gallery.innerHTML = ""
     page = 1
-    galleryAxiosCreate(searchString,page)
+    galleryAxiosCreate(searchString,page,"submit")
 })
 
 gallery.addEventListener("click",(event) => {
@@ -54,5 +55,5 @@ gallery.addEventListener("click",(event) => {
 
 moreBtn.addEventListener("click",(event) => {
     page += 1
-    galleryAxiosCreate(searchString,page)
+    galleryAxiosCreate(searchString,page,"click")
 })
