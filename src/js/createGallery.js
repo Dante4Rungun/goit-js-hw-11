@@ -2,7 +2,6 @@ import Notiflix from "notiflix"
 
 export default function createGallery(galleryItems){
     const gallery = document.querySelector('.gallery')
-    gallery.innerHTML = ''
     let cardList = []
     for (const item of galleryItems.hits){
         const card = document.createElement('div')
