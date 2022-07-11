@@ -17,9 +17,11 @@ search.addEventListener("input", (event) => {
 })
 
 async function galleryAxiosCreate(searchString,page){
+    moreBtn.setAttribute('hidden','')
     try{
         const gallery = await axiosGalerry(searchString,page)
         createGallery(gallery)
+        moreBtn.removeAttribute('hidden')
     }
     catch(error){
         console.log(error)
@@ -28,7 +30,6 @@ async function galleryAxiosCreate(searchString,page){
 
 search.addEventListener("submit", (event) => {
     event.preventDefault()
-    moreBtn.removeAttribute('hidden')
     page = 1
     galleryAxiosCreate(searchString,page)
 })
