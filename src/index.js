@@ -6,6 +6,8 @@ import createGallery from "./js/createGallery";
 
 const gallery = document.querySelector('.gallery')
 const search = document.querySelector('.search')
+const moreBtn = document.querySelector('.load-more')
+moreBtn.setAttribute('hidden','')
 let searchString = ''
 let searchStringSubmit =''
 let page =  1
@@ -26,13 +28,8 @@ async function galleryAxiosCreate(searchString,page){
 
 search.addEventListener("submit", (event) => {
     event.preventDefault()
-    if(searchStringSubmit === searchString){
-        page += 1
-    }
-    else {
-        page = 1
-        searchStringSubmit = searchString
-    }
+    moreBtn.removeAttribute('hidden')
+    page = 1
     galleryAxiosCreate(searchString,page)
 })
 
@@ -41,4 +38,9 @@ gallery.addEventListener("click",(event) => {
     let gallery = new simpleLightbox('.gallery a', {})
     gallery.options.captionDelay = '250ms'
 
+})
+
+moreBtn.addEventListener("click",(event) => {
+    page += 1
+    galleryAxiosCreate(searchString,page)
 })
