@@ -98,3 +98,17 @@ img {
     margin-left: 10px
 }
 
+.load-more{
+    padding: 10px 15px;
+    margin-top: 15px;
+    border-radius: 4px;
+    background-color: rgba(151, 149, 149, 0.293);
+    outline: none;
+    border: 0px;
+    cursor: pointer;
+}
+
+.load-more:hover{
+    background-color: rgb(86, 86, 189);
+    color: #fafafa;
+}
