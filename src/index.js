@@ -1,4 +1,3 @@
-import showGallery from "./js/fetchGallery"
 import simpleLightbox from "simplelightbox"
 import "simplelightbox/dist/simple-lightbox.min.css";
 import axiosGalerry from "./js/axiosAPI";
@@ -23,9 +22,12 @@ async function galleryAxiosCreate(searchString,page){
         const gallery = await axiosGalerry(searchString,page)
         createGallery(gallery)
         moreBtn.removeAttribute('hidden')
+        if(gallery.hits.length === 0){
+            Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+        }
     }
     catch(error){
-        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
 }
 
