@@ -16,19 +16,27 @@ search.addEventListener("input", (event) => {
     searchString = event.target.value
 })
 
-async function galleryAxiosCreate(searchString,page){
-    moreBtn.setAttribute('hidden','')
-    try{
-        const gallery = await axiosGalerry(searchString,page)
-        createGallery(gallery)
-        moreBtn.removeAttribute('hidden')
-        if(gallery.hits.length === 0){
+async function galleryAxiosCreate(searchString,page,galleryLength){
+
+        moreBtn.setAttribute('hidden','')
+        try{
+            const gallery = await axiosGalerry(searchString,page)
+            if(galleryLength <= page*40){
+                Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
+                moreBtn.setAttribute('hidden','')
+            }
+            else if(gallery.hits.length === 0){
+                Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+            }
+            else{
+                createGallery(gallery)
+                moreBtn.removeAttribute('hidden')
+            }
+
+        }
+        catch(error){
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
         }
-    }
-    catch(error){
-        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-    }
 }
 
 search.addEventListener("submit", (event) => {
