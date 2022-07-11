@@ -3,6 +3,7 @@ import simpleLightbox from "simplelightbox"
 import "simplelightbox/dist/simple-lightbox.min.css";
 import axiosGalerry from "./js/axiosAPI";
 import createGallery from "./js/createGallery";
+import Notiflix from "notiflix";
 
 const gallery = document.querySelector('.gallery')
 const search = document.querySelector('.search')
@@ -24,7 +25,7 @@ async function galleryAxiosCreate(searchString,page){
         moreBtn.removeAttribute('hidden')
     }
     catch(error){
-        console.log(error)
+        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
     }
 }
 
