@@ -8,11 +8,17 @@ export default async function axiosGalerry(searchString,page){
     }
 
     let response = await axios(config)
-    //if (!response.ok) {
-        //throw Error(`is not ok: ` + response.status);
-    //}
-    //else {
+    if (!response.ok) {
+        if(response.status === 404){
+            throw Error(`is not ok: ` + response.status);
+        }
+        else{
+            let gallery = response.data
+            return gallery
+        }
+    }
+    else {
         let gallery = response.data
         return gallery
-    //}
+    }
 }
