@@ -49,6 +49,7 @@ search.addEventListener("submit", (event) => {
 
     if(searchString === ''){
         Notiflix.Notify.failure('No search data, please input smth')
+        moreBtn.setAttribute('hidden','')
     }
     else{
         galleryAxiosCreate(searchString,page,"submit")
