@@ -7,6 +7,7 @@ import Notiflix from "notiflix";
 const gallery = document.querySelector('.gallery')
 const search = document.querySelector('.search')
 const moreBtn = document.querySelector('.load-more')
+
 moreBtn.setAttribute('hidden','')
 let searchString = ''
 let searchStringSubmit = ''
@@ -18,8 +19,10 @@ search.addEventListener("input", (event) => {
 
 async function galleryAxiosCreate(searchString,page,clickType){
         moreBtn.setAttribute('hidden','')
+        console.log((page-1)*40)
         try{
             const galleryItems = await axiosGalerry(searchString,page)
+            
             if(galleryItems.totalHits <= page*40 && clickType === 'click'){
                 Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
                 moreBtn.setAttribute('hidden','')
@@ -43,14 +46,19 @@ search.addEventListener("submit", (event) => {
     event.preventDefault()
     gallery.innerHTML = ""
     page = 1
-    galleryAxiosCreate(searchString,page,"submit")
+
+    if(searchString === ''){
+        Notiflix.Notify.failure('No search data, please input smth')
+    }
+    else{
+        galleryAxiosCreate(searchString,page,"submit")
+    }
 })
 
 gallery.addEventListener("click",(event) => {
     event.preventDefault()
-    let gallery = new simpleLightbox('.gallery a', {})
-    gallery.options.captionDelay = '250ms'
-
+    let ligthBoxGallery = new simpleLightbox('.gallery a', {})
+    ligthBoxGallery.options.captionDelay = '250ms'
 })
 
 moreBtn.addEventListener("click",(event) => {
