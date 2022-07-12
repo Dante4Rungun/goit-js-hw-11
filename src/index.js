@@ -13,7 +13,7 @@ let searchStringSubmit = ''
 let page =  1
 
 search.addEventListener("input", (event) => {
-    searchString = event.target.value
+    searchString = event.target.value.trim().replace("  "," ")
 })
 
 async function galleryAxiosCreate(searchString,page,clickType){
@@ -31,7 +31,7 @@ async function galleryAxiosCreate(searchString,page,clickType){
             else{
                 createGallery(galleryItems)
                 moreBtn.removeAttribute('hidden')
-                Notiflix.Notify.success('Hooray we found 500 images!')
+                Notiflix.Notify.success(`Hooray we found ${galleryItems.totalHits} images!`)
             }
         }
         catch(error){
