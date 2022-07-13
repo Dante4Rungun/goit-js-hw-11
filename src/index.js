@@ -11,7 +11,7 @@ const moreBtn = document.querySelector('.load-more')
 moreBtn.setAttribute('hidden','')
 let searchString = ''
 let searchStringSubmit = ''
-let page =  12
+let page =  1
 
 search.addEventListener("input", (event) => {
     searchString = event.target.value.trim().replace("  "," ")
@@ -46,7 +46,7 @@ async function galleryAxiosCreate(searchString,page,clickType){
 search.addEventListener("submit", (event) => {
     event.preventDefault()
     gallery.innerHTML = ""
-    page = 12
+    page = 1
 
     if(searchString === ''){
         Notiflix.Notify.failure('No search data, please input smth')
