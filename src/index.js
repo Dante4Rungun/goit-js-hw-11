@@ -11,7 +11,7 @@ const moreBtn = document.querySelector('.load-more')
 moreBtn.setAttribute('hidden','')
 let searchString = ''
 let searchStringSubmit = ''
-let page =  1
+let page =  12
 
 search.addEventListener("input", (event) => {
     searchString = event.target.value.trim().replace("  "," ")
@@ -19,12 +19,12 @@ search.addEventListener("input", (event) => {
 
 async function galleryAxiosCreate(searchString,page,clickType){
         moreBtn.setAttribute('hidden','')
-        console.log((page-1)*40)
+        console.log((page)*40)
         try{
-            const galleryItems = await axiosGalerry(searchString,page)
-            
+            const galleryItems = await axiosGalerry(searchString,page,40)
             if(galleryItems.totalHits <= page*40 && clickType === 'click'){
-                Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")
+                Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.")                
+                createGallery(galleryItems)
                 moreBtn.setAttribute('hidden','')
             }
             else if(galleryItems.hits.length === 0 && clickType === 'submit'){
@@ -32,6 +32,7 @@ async function galleryAxiosCreate(searchString,page,clickType){
                 Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
             }
             else{
+                const galleryItems = await axiosGalerry(searchString,page,40)
                 createGallery(galleryItems)
                 moreBtn.removeAttribute('hidden')
                 Notiflix.Notify.success(`Hooray we found ${galleryItems.totalHits} images!`)
@@ -45,7 +46,7 @@ async function galleryAxiosCreate(searchString,page,clickType){
 search.addEventListener("submit", (event) => {
     event.preventDefault()
     gallery.innerHTML = ""
-    page = 1
+    page = 12
 
     if(searchString === ''){
         Notiflix.Notify.failure('No search data, please input smth')
